@@ -33,7 +33,6 @@ Typically, the voltage drop $V_0-V_s$ during the avalanche is rather high (on th
 
 This is exactly the recommended readout circuit for the LND-712 tube:
 
-![Geiger counter readout circuit]({{site.url}}/assets/pic-geiger-readout2.jpg)
 
 The LND-712 tube has a recommended operating voltage of 500 volts, starting voltage of 325 volts or lower and a capacitance of about 3 picofarads. The suggested values for the readout circuit are $R_1 = 1\,\mathrm{M\Omega}$, $R_2 = 10\,\mathrm{M\Omega}$ and $C = 50\,\mathrm{pF}$.
 
