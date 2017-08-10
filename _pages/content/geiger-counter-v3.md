@@ -21,15 +21,15 @@ At the moment, I would like the counter to have these features:
 
 ## Design process
 
-The signal from a Geiger tube is often read out in this circuit configuration:
+The signal from a Geiger tube is often read out in a circuit configuration whose minimal version is shown here in Figure (a):
 
 ![Geiger counter readout circuit]({{site.url}}/assets/pic-geiger-readout.jpg)
 
-The tube behaves very much as a simple capacitor. In the absence of radiation, it is fully charged and the red circuit node is at the high voltage $V_0$. When an ionizing particle passes through the tube, it creates an avalanche of ions and the tube capacitance starts very quickly discharging. That is, until the voltage across it drops below a threshold $V_s$ (the _starting voltage_) where the discharge can no longer be sustained. We can assume this all happens very fast compared with the characteristic time-scale of the $RC$ circuit. After the discharge stops, the circuit starts (comparatively slowly) relaxing back to its steady state with the voltage across the tube back at $V_0$.
+The tube whose anode is connected to a large resistor $R_{\mathrm{A}}$ (on the order of megaohms) behaves very much like a simple capacitor with a small capacitance $C_{\mathrm{T}}$ (on the order of picofarads). In the absence of radiation, this capacitor is fully charged and the red circuit node is at the high voltage $V_{\mathrm{hv}}$. When an ionizing particle passes through the tube, it creates an avalanche of ions and the tube capacitance starts quickly discharging. That is, until the voltage across it drops below a threshold $V_{\mathrm{s}}$ (the _starting voltage_) where the discharge can no longer be sustained. We can assume this all happens very fast compared with the characteristic time-scale of the $R_{\mathrm{A}}C_{\mathrm{T}}$ circuit. After the discharge stops, the circuit starts (comparatively slowly) relaxing back to its steady state with the voltage across the tube back at $V_{\mathrm{hv}}$.
 
-The capacitor $C$ does not play any role in this simplified description of the process except to dc isolate the blue node where the pulse is detected by further circuitry from the high voltage (this by the way means it needs to be accordingly rated for high enough voltage). This lack of influence by the coupling capacitor is a justified assumption if it together with the resistance of the connected pulse detector forms an $RC$ circuit with a characteristic time significantly longer than the time-scale given by $R_1$ and the tube capacitance.
+The resulting voltage dip could in principle be measured directly at the red node but one typically tries to isolate the mesuring circuitry from the high voltage part of the circuit. This is done by connecting a coupling capacitor $C_{\mathrm{A}}$ to the red node and dc biasing its other end to a lower voltage $V_0$ via a resistor $R_{\mathrm{B}}$.
 
-Typically, the voltage drop $V_0-V_s$ during the avalanche is rather high (on the order of 100 volts), so it makes sense to reduce it a bit before detection. This can be done by splitting the resistor $R_1$ into a series combination of a smaller $R_1$ (at the high voltage supply) and a larger $R_2$ (at the tube) and connecting the coupling capacitor to the node between them. The voltage drop is then reduced by a factor $R_1/(R_1+R_2)$. 
+Typically, the voltage drop $V_{\mathrm{hv}}-V_{\mathrm{s}}$ during the avalanche is rather high (on the order of 100-200 volts), so it makes sense to reduce it a bit before detection. This can be done by splitting the resistor $R_{\mathrm{A}}$ into a series combination of a smaller $R_{\mathrm{A}1}$ (at the high voltage supply) and a larger $R_{\mathrm{A}2}$ (at the tube) and connecting the coupling capacitor to the node between them. The voltage drop is then reduced by a factor $R_{\mathrm{A}1}/(R_{\mathrm{A}1}+R_{\mathrm{A}2})$. 
 
 This is exactly the recommended readout circuit for the LND-712 tube:
 
@@ -42,7 +42,7 @@ These numbers allow us to estimate the maximum expected current that the high vo
 
 1. Geiger tube LND-712 (ordered)
 2. MC34063 boost controller (ordered)
-3. 170uH inductor
+3. 220uH inductor (ordered)
 4. BYV26E high voltage fast diode (ordered)
 5. high voltage capacitors (one for source, one 50pF for signal coupling)
 6. trimmer for hv adjustment (ordered)
