@@ -31,12 +31,9 @@ The resulting voltage dip could in principle be measured directly at the red nod
 
 This problem can be alleviated by modifying the circuit into the form shown in (c). Now the coupling capacitor is not connected directly to the anode but to the middle node of a resistive voltage divider. In this setting, $R_{\mathrm{A}2}$ is significantly larger than $R_{\mathrm{A}1}$. Not only does this mean that the relaxation time of the circuit after a discharge is much less affected but it also helps reduce the amplitude of the voltage spike presented to the detection circuitry behind the coupling capacitor.
 
-Typically, the voltage drop $V_{\mathrm{hv}}-V_{\mathrm{s}}$ during the avalanche is rather high (on the order of 100-200 volts), so it makes sense to reduce it a bit before detection. This can be done by splitting the resistor $R_{\mathrm{A}}$ into a series combination of a smaller $R_{\mathrm{A}1}$ (at the high voltage supply) and a larger $R_{\mathrm{A}2}$ (at the tube) and connecting the coupling capacitor to the node between them. The voltage drop is then reduced by a factor $R_{\mathrm{A}1}/(R_{\mathrm{A}1}+R_{\mathrm{A}2})$. 
-
-This is exactly the recommended readout circuit for the LND-712 tube:
 
 
-The LND-712 tube has a recommended operating voltage of 500 volts, starting voltage of 325 volts or lower and a capacitance of about 3 picofarads. The suggested values for the readout circuit are $R_1 = 1\,\mathrm{M\Omega}$, $R_2 = 10\,\mathrm{M\Omega}$ and $C = 50\,\mathrm{pF}$.
+The LND-712 tube has a recommended operating voltage of 500 volts, starting voltage of 325 volts or lower and a capacitance of about 3 picofarads. The suggested values for the readout circuit are $R_{\mathrm{A}1} = 1\,\mathrm{M\Omega}$, $R_{\mathrm{A}2} = 10\,\mathrm{M\Omega}$ and $C_{\mathrm{A}} = 50\,\mathrm{pF}$.
 
 These numbers allow us to estimate the maximum expected current that the high voltage source needs to supply. In a single detection event, a charge of approximately $600\,\mathrm{pF}$ (a capacitance of $3\,\mathrm{pF}$ is discharged by about $200\,\mathrm{V}$) is drawn from the source. The minimum dead time of the tube is specified as $90\,\mathrm{\mu s}$, so the maximum counting rate is about $10^4\,\mathrm{s}^{-1}$, corresponding to an average current of $6\,\mathrm{\mu A}$. At a voltage of $500\,\mathrm{V}$, the maximum power drawn from the high voltage source is about $3\,\mathrm{mW}$.
 
