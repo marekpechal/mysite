@@ -39,11 +39,18 @@ These numbers allow us to estimate the maximum expected current that the high vo
 
 ## Shopping list
 
-1. Geiger tube LND-712 (ordered)
-2. MC34063 boost controller (ordered)
-3. 220uH inductor (ordered)
-4. BYV26E high voltage fast diode (ordered)
-5. high voltage capacitors (one for source, one 50pF for signal coupling)
-6. trimmer for hv adjustment (ordered)
-7. counter?, op-amps?
-8. usb and/or barrel connectors for power
+- high voltage capacitors (50pF for signal coupling, larger for voltage multiplier)
+- counter?, op-amps?
+- usb and/or barrel connectors for power
+
+## Ordered
+
+- Geiger tube LND-712
+- MC34063 boost controller
+- 220uH inductor
+- BYV26E, BYV26C high voltage fast diodes
+- trimmer for hv adjustment
+
+## Available parts
+
+- high voltage capacitors (22nF, 600V) 
