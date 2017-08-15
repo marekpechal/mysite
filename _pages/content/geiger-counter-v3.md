@@ -21,6 +21,8 @@ At the moment, I would like the counter to have these features:
 
 ## Design process
 
+# Geiger tube readout circuitry
+
 The signal from a Geiger tube is often read out in a circuit configuration whose minimal version is shown here in Figure (a):
 
 ![Geiger counter readout circuit]({{site.url}}/assets/pic-geiger-readout.jpg)
@@ -35,22 +37,45 @@ This problem can be alleviated by modifying the circuit into the form shown in (
 
 The LND-712 tube has a recommended operating voltage of 500 volts, starting voltage of 325 volts or lower and a capacitance of about 3 picofarads. The suggested values for the readout circuit are $R_{\mathrm{A}1} = 1\,\mathrm{M\Omega}$, $R_{\mathrm{A}2} = 10\,\mathrm{M\Omega}$ and $C_{\mathrm{A}} = 50\,\mathrm{pF}$.
 
-These numbers allow us to estimate the maximum expected current that the high voltage source needs to supply. In a single detection event, a charge of approximately $600\,\mathrm{pF}$ (a capacitance of $3\,\mathrm{pF}$ is discharged by about $200\,\mathrm{V}$) is drawn from the source. The minimum dead time of the tube is specified as $90\,\mathrm{\mu s}$, so the maximum counting rate is about $10^4\,\mathrm{s}^{-1}$, corresponding to an average current of $6\,\mathrm{\mu A}$. At a voltage of $500\,\mathrm{V}$, the maximum power drawn from the high voltage source is about $3\,\mathrm{mW}$.
+These numbers allow us to estimate the maximum expected current that the high voltage source needs to supply. In a single detection event, a charge of approximately $600\,\mathrm{pF}$ (a capacitance of $3\,\mathrm{pF}$ is discharged by about $200\,\mathrm{V}$) is drawn from the source. The minimum dead time of the tube is specified as $90\,\mathrm{\mu s}$, so the maximum counting rate is about $10^4\,\mathrm{s}^{-1}$, corresponding to an average current of $6\,\mathrm{\mu A}$. This should be negligible in comparison to the current drawn by the feedback resistors. I am planning to have a shunt feedback resistance of 10 megaohms, which would give a current draw of about 50 microamps.
+
+# High voltage source
+
+The high voltage source will be a boost converter with a [MC34063A]({{site.url}}/assets/datasheets/MC34063A.pdf) controller IC (because I have already built a few with this one and it seems to work quite reliably). The circuit looks roughly like this:
+
+![Geiger counter hv source]({{site.url}}/assets/pic-geiger-hvsource.jpg)
+
+The MC34063A generates the switching pulses, has a built-in comparator to suspend switching when the desired output voltage has been reached and even a built in BJT switch such that in some cases one does not need to use an external one. Timing is maintained by charging and discharging a small capacitor $C_t$ with a constant current. One can also connect a small current sensing resistor $R_{sc}$ in series with the inductor to implement current limiting. When the voltage drop across this resistor exceeds approximately 300 mV, the charging current of the timing capacitor is increased, making it quickly reach the threshold voltage and thus turning the switch off.
+
+There are essentially two options I would consider for the switch: The first is to use a high voltage mosfet (shown in yellow). The advantage is I could get the desired voltage around 500 V in a single step (in blue). The disadvantage is I would probably want to use a mosfet gate driver in this case, so one extra IC. The second option is a BJT. These are harder to find for high voltages, so I'd use a voltage doubler (in green). The advantage is I could connect the transistor direcly to the controller IC (as shown in red), without a special driver, and I could use components rated for half the voltage. The disadvantage is that I would need three capacitors and three diodes in the high voltage part. Apart from these reasons, if I want to run the whole thing from 5V, it could be easier to use a BJT since mosfets usually need a bit higher voltage on their gate to fully open.
+
+Assuming I would use the BJT with the doubler and aim for an output voltage between 400 and 600 volts generated from an input between 5 and 9 volts and I would like to use the 220 microhenry inductors I got from ebay, the current through the inductor should increase at a rate between 23 and 41 milliamps per microsecond in the on state and decrease at a rate between 0.9 and 1.3 amps per microsecond in the off state. Since the typical on and off times of the controller are 26 and 4 microseconds, respectively, the converter will always be operating in the dicontinuous mode.
+
+During the on time, the current through the inductor, assuming zero resistance, would ramp up to between 0.6 and 1.0 amp.
+
+Neglecting losses, this means the energy stored in the inductor in a single cycle would be in the range of 40 to 110 microjoules and at an output voltage of 500 volts, the charge delivered to the load between 0.08 and 0.22 microcoulombs. If I expect to draw about 50 microamps from the output capacitors, that is about 230 to 630 pulses per second. So the converter should be running only about 0.7 to 2.0% of the time.
 
 ## Shopping list
 
 - high voltage capacitors (50pF for signal coupling, larger for voltage multiplier)
 - counter?, op-amps?
 - usb and/or barrel connectors for power
+- 10k trimmers for hv adjustment
 
 ## Ordered
 
-- Geiger tube LND-712
-- MC34063 boost controller
-- 220uH inductor
-- BYV26E, BYV26C high voltage fast diodes
-- trimmer for hv adjustment
+- Geiger tube [LND-712]({{site.url}}/assets/datasheets/LND712.pdf)
 
 ## Available parts
 
 - high voltage capacitors (22nF, 600V) 
+- [BYV26E, BYV26C]({{site.url}}/assets/datasheets/BYV26.pdf) high voltage fast diodes
+- 1k trimmers for hv adjustment
+- 220uH inductors
+- [MC34063A]({{site.url}}/assets/datasheets/MC34063A.pdf) boost controller
+- [TC4420]({{site.url}}/assets/datasheets/TC4420.pdf) mosfet drivers
+- [BUX85G]({{site.url}}/assets/datasheets/BUX85.pdf) High voltage NPN
+
+
+
+

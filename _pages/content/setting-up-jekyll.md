@@ -34,7 +34,6 @@ title: Setting up Jekyll
 tags:
 - coding
 - jekyll
-- under-construction
 ---
 {% endhighlight %}
 
