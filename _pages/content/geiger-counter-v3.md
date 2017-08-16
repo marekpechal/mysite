@@ -64,13 +64,12 @@ Neglecting losses, this means the energy stored in the inductor in a single cycl
 
 ## Ordered
 
-- Geiger tube [LND-712]({{site.url}}/assets/datasheets/LND712.pdf)
-
 ## Available parts
 
-- high voltage capacitors (22nF, 600V) 
+- Geiger tube [LND-712]({{site.url}}/assets/datasheets/LND712.pdf)
+- high voltage capacitors (22nF 600V, 100nF 400V) 
 - [BYV26E, BYV26C]({{site.url}}/assets/datasheets/BYV26.pdf) high voltage fast diodes
-- 1k trimmers for hv adjustment
+- 10k, 1k trimmers for hv adjustment
 - 220uH inductors
 - [MC34063A]({{site.url}}/assets/datasheets/MC34063A.pdf) boost controller
 - [TC4420]({{site.url}}/assets/datasheets/TC4420.pdf) mosfet drivers
