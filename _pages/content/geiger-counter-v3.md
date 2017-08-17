@@ -77,4 +77,12 @@ Neglecting losses, this means the energy stored in the inductor in a single cycl
 
 
 
+## Lessons learned
 
+- Beware BJTs in fast switching high current applications. Namely, the storage time (the delay between the base current stopping and the transistor actually closing) which can be on the order of microseconds if the transistor is driven into saturation. This can be mitigated using a Baker clamp to prevent saturation. But it just seems easier to use a MOSFET instead of a BJT.
+
+- When testing if a MOSFET opens and closes properly, simply connecting its drain to a pull-up resistor and measuring the voltage drop over it can be misleading. The MOSFET can have a capacitance on the order of hundreds of picofarads. This together with the sensing resistor forms an RC circuit that low-pass filters the measured signal, making it seem as if the transistor does not fully open/close.
+
+- Sometimes meticulous testing of each part of the circuit can be counterproductive. Connecting oscilloscope leads to different parts of the boost converter circuit can make it go mad with the extra capacitance, showing very confusing behaviour which is not actually there when the scope is not connected.
+
+- Keep connections in the feedback loop _short_, especially if the voltage divider consists of very large resistors. Presumably, the inductance of the wire, when connected between the high-impedance voltage divider and the feedback input of the controller makes it behave improperly (I saw the output of the converter shoot up to over 900 volts when it was supposed to be below 100 - this suggests the feedback simply doesn't turn of the switching). If a long connection is needed, put it between the voltage divider and the output of the converter (effectively on the low-impedance side where the inductance won't matter as much).
